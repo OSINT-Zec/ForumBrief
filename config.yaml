@@ -1,0 +1,50 @@
+topic: "moving to Germany"
+
+time_window_months: 24
+max_posts: 1800
+grab_top_n_comments: 5
+
+subreddits:
+  - germany
+  - berlin
+  - IWantOut
+  - expats
+  - europe
+  - visas
+  - AskEurope
+
+reddit_query:
+  must: ["moving", "(advice OR tips OR guide OR checklist OR mistakes)", "(visa OR housing OR job OR cost OR bureaucracy OR bank OR insurance)"]
+  must_not: ["meme", "joke", "low-effort"]
+  min_score: 10
+  min_comments: 3
+
+stackexchange_sites:
+  - expatriates
+  - travel
+  - academia
+  - workplace
+stackexchange_query:
+  intitle: ["moving to germany", "berlin housing", "health insurance germany", "blue card tips"]
+  min_score: 1
+
+themes:
+  visa: "visa|blue card|aufenthalt|residence|permit|embassy|appointment"
+  housing: "rent|kaltmiete|warmmiete|wg|schufa|deposit|landlord|wohn"
+  job: "job|contract|probation|salary|kündigung|cv|resume|linkedin"
+  bureaucracy: "anmeldung|termin|amt|steuer|insurance|krankenkasse|registration"
+  culture: "culture|social|friends|language|etiquette"
+  cost: "cost|budget|expenses|price|groceries|transport|bahn|tax class"
+
+clustering:
+  model: "sentence-transformers/all-MiniLM-L6-v2"
+  distance_threshold: 0.45
+  min_text_len: 280
+
+summarization:
+  model: "gpt-4o-mini"
+  per_item_bullets: 2
+  reduce_bullets: 6
+  temperature: 0.2
+  cluster_min_size: 4       # skip clusters with <4 docs
+  max_clusters: 150         # summarize only the top N clusters
